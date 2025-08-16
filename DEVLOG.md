@@ -14,6 +14,7 @@ Each entry is dated so I can track the journey from start to finish.
 - Wrote initial `README.md` with project goals and roadmap
 - Set up `DEVLOG.md` for daily notes
 - Started testing programatically moving the mouse with pyautogui and got more comfortable with using pyautogui
+  - Played around with pyautogui and made a cool geometric shape
 
 ### Issues/Questions
 - None yet — just scaffolding the repo
