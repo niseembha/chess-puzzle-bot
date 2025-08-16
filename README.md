@@ -19,7 +19,9 @@ This project is a Python-based automation bot that (will):
 ---
 
 ## Tools & Libraries
-- 
+- pyautogui
+- numpy
+- time
 
 ---
 
