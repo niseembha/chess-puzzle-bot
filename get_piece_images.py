@@ -60,7 +60,8 @@ def get_real_time_images_of_board():
 
 def get_library_images():
     time.sleep(3)
-    name = "black_queen_w"
-    img = pyautogui.screenshot(region=(309+50*3, 489+50*3, 46, 46))
+    name = "white_king_w1"
+    img = pyautogui.screenshot(region=(309+50*7, 489+50*7, 46, 46))
     img.save(f"piece_images/library/{name}.png")
 
+get_library_images()
