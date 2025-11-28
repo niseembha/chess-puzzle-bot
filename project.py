@@ -7,6 +7,8 @@ from pynput import keyboard
 stockfish = Stockfish("/opt/homebrew/bin/stockfish")
 stockfish.set_depth(25)
 
+# site to use this with: https://www.chesspuzzles.com/mate-in-three
+
 # width and height of each square: 
 # 46       46
 
@@ -209,7 +211,7 @@ def do_best_move(move):
 
     y1 = 513 + 50 * (8 - int(second_part2))
 
-    pyautogui.moveTo(x1, y1, duration=0.3)
+    pyautogui.moveTo(x1, y1, duration=0.1)
     pyautogui.click()
 
 # Loop it 
@@ -246,13 +248,13 @@ def main():
                 stockfish.make_moves_from_current_position([best_move])
                 best_move = stockfish.get_best_move()
                 stockfish.make_moves_from_current_position([best_move])
-                time.sleep(0.5)
+                time.sleep(0.1)
             
             i += 1
 
         pyautogui.scroll(-800)
         pyautogui.scroll(-800)
-        pyautogui.moveTo(634, 247, duration=0.3)
+        pyautogui.moveTo(634, 247, duration=0.1)
         pyautogui.click()
         print("Looping...")
         time.sleep(1)
