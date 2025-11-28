@@ -65,15 +65,7 @@ def get_real_time_images_of_board():
         x = 0
         i = 1
 
-def get_library_images():
-    time.sleep(3)
-    name = "white_rook_b1"
-    img = pyautogui.screenshot(region=(309+50*5, 489+50*2, 46, 46))
-    img.save(f"piece_images/library/{name}.png")
-
 def convert_images_to_fen():
-
-    get_real_time_images_of_board()
 
     to_move_img = pyautogui.screenshot(region=(709, 504, 228, 33))
     to_move_img.save(f"piece_images/real_time/to_move.png")
@@ -232,6 +224,7 @@ def main():
     time.sleep(3)
     while running:
 
+        get_real_time_images_of_board()
         fen = convert_images_to_fen()
         print(f"FEN: {fen}")
 
