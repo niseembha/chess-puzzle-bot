@@ -1,0 +1,27 @@
+{
+  "black_bishop_b.png": "b",
+  "black_bishop_w.png": "b",
+  "black_king_b.png": "k",
+  "black_king_w.png": "k",
+  "black_knight_b.png": "n",
+  "black_knight_w.png": "n",
+  "black_pawn_b.png": "p",
+  "black_pawn_w.png": "p",
+  "black_queen_b.png": "q",
+  "black_queen_w.png": "q",
+  "black_rook_b.png": "r",
+  "black_rook_w.png": "r",
+
+  "white_bishop_b.png": "B",
+  "white_bishop_w.png": "B",
+  "white_king_b.png": "K",
+  "white_king_w.png": "K",
+  "white_knight_b.png": "N",
+  "white_knight_w.png": "N",
+  "white_pawn_b.png": "P",
+  "white_pawn_w.png": "P",
+  "white_queen_b.png": "Q",
+  "white_queen_w.png": "Q",
+  "white_rook_b.png": "R",
+  "white_rook_w.png": "R"
+}
