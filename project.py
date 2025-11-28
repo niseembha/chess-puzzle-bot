@@ -1,10 +1,73 @@
-from get_piece_images import get_real_time_images_of_board
 import json
 import cv2
 import pyautogui
 from stockfish import Stockfish
 import time
+from pynput import keyboard
 stockfish = Stockfish("/opt/homebrew/bin/stockfish")
+stockfish.set_depth(25)
+
+# width and height of each square: 
+# 46       46
+
+# top left x, y:
+#        309, 489
+def get_real_time_images_of_board():
+    x = 0
+    y = 0
+    i = 1
+    j = 1
+    for _ in range(8):
+        for _ in range(8):
+            name = ""
+            match i:
+                case 1:
+                    name += "a"
+                case 2:
+                    name += "b"
+                case 3:
+                    name = "c"
+                case 4:
+                    name = "d"
+                case 5:
+                    name = "e"
+                case 6:
+                    name = "f"
+                case 7:
+                    name = "g"
+                case 8:
+                    name = "h"
+            match j:
+                case 1:
+                    name += "8"
+                case 2:
+                    name += "7"
+                case 3:
+                    name += "6"
+                case 4:
+                    name += "5"
+                case 5:
+                    name += "4"
+                case 6:
+                    name += "3"
+                case 7:
+                    name += "2"
+                case 8:
+                    name += "1"        
+            img = pyautogui.screenshot(region=(309+x, 489+y, 46, 46))
+            img.save(f"piece_images/real_time/{name}.png")
+            x += 50
+            i += 1
+        y += 50
+        j += 1
+        x = 0
+        i = 1
+
+def get_library_images():
+    time.sleep(3)
+    name = "white_rook_b1"
+    img = pyautogui.screenshot(region=(309+50*5, 489+50*2, 46, 46))
+    img.save(f"piece_images/library/{name}.png")
 
 def convert_images_to_fen():
 
@@ -97,10 +160,6 @@ def convert_images_to_fen():
 
     return fen
 
-def find_best_move(fen):
-    stockfish.set_fen_position(fen)
-    return stockfish.get_best_move()
-
 def do_best_move(move):
 
     first_part1 = move[0]
@@ -127,7 +186,7 @@ def do_best_move(move):
 
     y1 = 513 + 50 * (8 - int(first_part2))
 
-    pyautogui.moveTo(x1, y1, duration=0.1)
+    pyautogui.moveTo(x1, y1, duration=0.3)
     pyautogui.click()
 
     match second_part1:
@@ -150,15 +209,54 @@ def do_best_move(move):
 
     y1 = 513 + 50 * (8 - int(second_part2))
 
-    pyautogui.moveTo(x1, y1, duration=0.1)
+    pyautogui.moveTo(x1, y1, duration=0.3)
     pyautogui.click()
 
+# Loop it 
+
+running = True
+
+def escape_program(key):
+    global running
+    if key == keyboard.Key.esc:
+        running = False
+
 def main():
-    fen = convert_images_to_fen()
-    print(f"FEN: {fen}")
-    best_move = find_best_move(fen)
-    print(f"Best move: {best_move}")
-    do_best_move(best_move)
+    global running
+
+    listener = keyboard.Listener(on_press=escape_program)
+    listener.start()
+
+    time.sleep(3)
+    while running:
+
+        fen = convert_images_to_fen()
+        print(f"FEN: {fen}")
+
+        stockfish.set_fen_position(fen)
+        i = 1
+        for _ in range(3):
+            best_move = stockfish.get_best_move()
+            print(f"Best move: {best_move}")
+            do_best_move(best_move)
+
+            if i == 3:
+                break
+            else:
+                stockfish.make_moves_from_current_position([best_move])
+                best_move = stockfish.get_best_move()
+                stockfish.make_moves_from_current_position([best_move])
+                time.sleep(0.5)
+            
+            i += 1
+
+        pyautogui.scroll(-800)
+        pyautogui.scroll(-800)
+        pyautogui.moveTo(634, 247, duration=0.3)
+        pyautogui.click()
+        print("Looping...")
+        time.sleep(1)
+
 
 
 main()

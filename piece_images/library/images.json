@@ -24,5 +24,8 @@
   "white_queen_w.png": "Q",
   "white_rook_b.png": "R",
   "white_rook_w.png": "R",
-  "white_king_w1.png": "K"
+
+  "white_king_w1.png": "K",
+  "white_king_b1.png": "K",
+  "white_rook_b1.png": "R"
 }
