@@ -1,6 +1,6 @@
 # Chess Puzzle Auto-Solver Bot ♟️
 
-A Python bot that auto-solves online chess puzzles using image recognition and Stockfish. It specifically does the Mate in Three Problems from the [Mate in Three Problems at chesspuzzles.com](https://www.chesspuzzles.com/mate-in-three).
+A Python bot that auto-solves online chess puzzles using image recognition and Stockfish. It specifically does the Mate in Three Problems from the [Mate in Three Problems at chesspuzzles.com](https://www.chesspuzzles.com/mate-in-three). This was for my CS50 Python final project.
 
 This bot is designed specifically for my screen size and coordinate layout. All of the board positions and screenshot regions are hard-coded for my display, so the bot only works on my device unless those coordinates are recalibrated.
 
