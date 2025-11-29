@@ -87,4 +87,4 @@ With that, the entire project was done.
 
 ## Bugs / Notes
 
-The only bugs this program faces is that it will sometimes be unable to classify pieces (mainly white rooks for some reason). To mitigate this, I added more images to the library and it has improved a lot, but every once in a while it will mess up.
+The only bug this program faces is that it will sometimes be unable to classify pieces (mainly white rooks for some reason). To mitigate this, I added more images to the library. Every once in a while, it will still mess up, but very rarely now.
