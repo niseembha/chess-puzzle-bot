@@ -14,6 +14,18 @@ stockfish.set_depth(25)
 
 # top left x, y:
 #        309, 489
+
+def get_name_of_real_time_image(i, j):
+
+    name = ""
+
+    files = "abcdefgh"
+    name += files[i-1]
+    ranks = "87654321"
+    name += ranks[j-1]
+
+    return name     
+
 def get_real_time_images_of_board():
     x = 0
     y = 0
@@ -21,41 +33,7 @@ def get_real_time_images_of_board():
     j = 1
     for _ in range(8):
         for _ in range(8):
-            name = ""
-            match i:
-                case 1:
-                    name += "a"
-                case 2:
-                    name += "b"
-                case 3:
-                    name = "c"
-                case 4:
-                    name = "d"
-                case 5:
-                    name = "e"
-                case 6:
-                    name = "f"
-                case 7:
-                    name = "g"
-                case 8:
-                    name = "h"
-            match j:
-                case 1:
-                    name += "8"
-                case 2:
-                    name += "7"
-                case 3:
-                    name += "6"
-                case 4:
-                    name += "5"
-                case 5:
-                    name += "4"
-                case 6:
-                    name += "3"
-                case 7:
-                    name += "2"
-                case 8:
-                    name += "1"        
+            name = get_name_of_real_time_image(i, j)  
             img = pyautogui.screenshot(region=(309+x, 489+y, 46, 46))
             img.save(f"piece_images/real_time/{name}.png")
             x += 50
@@ -65,7 +43,7 @@ def get_real_time_images_of_board():
         x = 0
         i = 1
 
-def convert_images_to_fen():
+def convert_images_to_fen_dict():
 
     to_move_img = pyautogui.screenshot(region=(709, 504, 228, 33))
     to_move_img.save(f"piece_images/real_time/to_move.png")
@@ -99,7 +77,11 @@ def convert_images_to_fen():
 
             if similarity >= 0.85:
                 fen_dict[piece[:2]] = value
+                
+    print(fen_dict)
+    return fen_dict
 
+def convert_fen_dict_to_fen(fen_dict):
     fen_list = []
     count = 0
     for piece in fen_dict:
@@ -151,10 +133,9 @@ def convert_images_to_fen():
     else:
         fen += " b"
 
-
     return fen
 
-def do_best_move(move):
+def find_coordinates_for_move(move):
 
     first_part1 = move[0]
     first_part2 = move[1]
@@ -180,30 +161,34 @@ def do_best_move(move):
 
     y1 = 513 + 50 * (8 - int(first_part2))
 
-    pyautogui.moveTo(x1, y1, duration=0.3)
-    pyautogui.click()
-
     match second_part1:
         case "a":
-            x1 = 329
+            x2 = 329
         case "b":
-            x1 = 329 + 50 * 1
+            x2 = 329 + 50 * 1
         case "c":
-            x1 = 329 + 50 * 2
+            x2 = 329 + 50 * 2
         case "d":
-            x1 = 329 + 50 * 3
+            x2 = 329 + 50 * 3
         case "e":
-            x1 = 329 + 50 * 4
+            x2 = 329 + 50 * 4
         case "f":
-            x1 = 329 + 50 * 5
+            x2 = 329 + 50 * 5
         case "g":
-            x1 = 329 + 50 * 6
+            x2 = 329 + 50 * 6
         case "h":
-            x1 = 329 + 50 * 7
+            x2 = 329 + 50 * 7
 
-    y1 = 513 + 50 * (8 - int(second_part2))
+    y2 = 513 + 50 * (8 - int(second_part2))
 
-    pyautogui.moveTo(x1, y1, duration=0.1)
+    return x1, y1, x2, y2
+
+def do_best_move(x1, y1, x2, y2):
+
+    pyautogui.moveTo(x1, y1, duration=0.3)
+    pyautogui.click()
+    time.sleep(0.1)
+    pyautogui.moveTo(x2, y2, duration=0.3)
     pyautogui.click()
 
 # Loop it 
@@ -225,7 +210,8 @@ def main():
     while running:
 
         get_real_time_images_of_board()
-        fen = convert_images_to_fen()
+        fen_dict = convert_images_to_fen_dict()
+        fen = convert_fen_dict_to_fen(fen_dict)
         print(f"FEN: {fen}")
 
         stockfish.set_fen_position(fen)
@@ -233,7 +219,8 @@ def main():
         for _ in range(3):
             best_move = stockfish.get_best_move()
             print(f"Best move: {best_move}")
-            do_best_move(best_move)
+            x1,y1,x2,y2 = find_coordinates_for_move(best_move)
+            do_best_move(x1,y1,x2,y2)
 
             if i == 3:
                 break
@@ -254,4 +241,5 @@ def main():
 
 
 
-main()
+if __name__ == "__main__":
+    main()
