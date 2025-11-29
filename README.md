@@ -10,7 +10,7 @@ I intentionally used the site chesspuzzles.com, as there is no leaderboard or ra
 
 ## Video Demo: <URL HERE>
 
-(to do)
+https://youtu.be/4U0C30IJR2M?si=Xjkm3WldELFjYXLu
 
 ## Tools & Libraries:
 

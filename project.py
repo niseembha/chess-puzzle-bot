@@ -185,10 +185,10 @@ def find_coordinates_for_move(move):
 
 def do_best_move(x1, y1, x2, y2):
 
-    pyautogui.moveTo(x1, y1, duration=0.3)
+    pyautogui.moveTo(x1, y1, duration=0.1)
     pyautogui.click()
-    time.sleep(0.1)
-    pyautogui.moveTo(x2, y2, duration=0.3)
+    time.sleep(0.3)
+    pyautogui.moveTo(x2, y2, duration=0.1)
     pyautogui.click()
 
 # Loop it 
@@ -237,7 +237,7 @@ def main():
         pyautogui.moveTo(634, 247, duration=0.1)
         pyautogui.click()
         print("Looping...")
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 
